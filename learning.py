@@ -69,7 +69,7 @@ def learning(model, train_generator, validation_generator):
                                   epochs=30,
                                   validation_data=validation_generator,
                                   validation_steps=10)
-    model.save('model_4000.h5')
+    model.save('model.h5')
     show_result(history)
 
 
