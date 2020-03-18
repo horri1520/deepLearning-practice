@@ -1,13 +1,14 @@
 import os
 
+import h5py
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from keras import layers, models, optimizers
 from keras.applications.vgg16 import VGG16
 from keras.layers import BatchNormalization, Dense, Dropout, Flatten, Input
 from keras.models import Model, Sequential, load_model
 from keras.preprocessing.image import ImageDataGenerator
-
-import pandas as pd
 
 
 def judgement():
@@ -19,12 +20,8 @@ def judgement():
         test_dir,
         target_size=(150,150),
         batch_size=20,
-        class_mode="binary"
+        class_mode=None
     )
-    for data,label in test_generator:
-        print(data.shape)
-        print(label.shape)
-        break
     pred0 = model_2000.predict_generator(
         test_generator,
         steps=1000,
