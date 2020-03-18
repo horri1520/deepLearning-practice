@@ -2,7 +2,7 @@ import shutil
 import glob
 
 def train_imgs_prepare():
-    for i in range(0,1000):
+    for i in range(0,2000):
         elements_dir = '../CNNelements/dogsvscats/train_imgs/'
         base_dir = './dataset/train/'
         train_dogs = glob.glob(elements_dir + 'dog.' + str(i) + '.jpg', recursive=True)
@@ -13,7 +13,7 @@ def train_imgs_prepare():
 
 
 def validation_imgs_prepare():
-    for i in range(1000,1500):
+    for i in range(2000,3000):
         elements_dir = '../CNNelements/dogsvscats/train_imgs/'
         base_dir = './dataset/validation/'
         validation_dogs = glob.glob(elements_dir + 'dog.' + str(i) + '.jpg', recursive=True)
@@ -24,7 +24,7 @@ def validation_imgs_prepare():
 
 
 def test_imgs_prepare():
-    for i in range(1,501):
+    for i in range(1,1001):
         elements_dir = '../CNNelements/dogsvscats/test_imgs/'
         base_dir = './dataset/test/'
         test_imgs = glob.glob(elements_dir + str(i) + '.jpg', recursive=True)

@@ -65,11 +65,11 @@ def create_model(train_generator, validation_generator):
 
 def learning(model, train_generator, validation_generator):
     history = model.fit_generator(train_generator,
-                                  steps_per_epoch=100,
+                                  steps_per_epoch=200,
                                   epochs=30,
                                   validation_data=validation_generator,
-                                  validation_steps=50)
-    model.save('model.h5')
+                                  validation_steps=10)
+    model.save('model_4000.h5')
     show_result(history)
 
 
