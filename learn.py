@@ -11,9 +11,7 @@ dataset_dir = './dataset/'
 train_dir = dataset_dir + 'train/'
 validation_dir = dataset_dir + 'validation/'
 
-def main():
-    #construct model
-
+def construct_model():
     model = models.Sequential()
     model.add(layers.Conv2D(32,(3,3),activation="relu",input_shape=(150,150,3)))
     model.add(layers.MaxPooling2D((2,2)))
@@ -37,38 +35,40 @@ def main():
     model.compile(loss="binary_crossentropy",
              optimizer=optimizers.RMSprop(lr=1e-4),
              metrics=["acc"])
+    preprocess_imgs(model)
 
 
-    #preprocess data
-
+def preprocess_imgs(model):
     train_datagen = ImageDataGenerator(rescale=1./255)
     validation_datagen = ImageDataGenerator(rescale=1./255)
     train_generator = train_datagen.flow_from_directory(
         train_dir,
         target_size=(150,150),
-        batch_size=32,
+        batch_size=20,
         class_mode="binary"
     )
     validation_generator = validation_datagen.flow_from_directory(
         validation_dir,
         target_size=(150,150),
-        batch_size=32,
+        batch_size=20,
         class_mode="binary"
     )
     print(train_generator.class_indices, validation_generator.class_indices)
+    learn(model, train_generator, validation_generator)
 
 
-    #learn
-
+def learn(model, train_generator, validation_generator):
     history = model.fit_generator(train_generator,
-                                  steps_per_epoch=125,
+                                  steps_per_epoch=200,
                                   epochs=30,
                                   validation_data=validation_generator,
-                                  validation_steps=2000)
-    model.save('model.h5')
+                                  validation_steps=50)
+    model.save('./models/model.h5')
+    save_history(history, './histories/history.txt')
+    show_result(history)
 
 
-    #show result
+def show_result(history):
     acc = history.history["acc"]
     val_acc = history.history["val_acc"]
     loss = history.history["loss"]
@@ -90,4 +90,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    construct_model()
