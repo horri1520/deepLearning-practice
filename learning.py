@@ -1,6 +1,7 @@
 from keras import layers, models, optimizers
 from keras.preprocessing.image import ImageDataGenerator
 import h5py
+import matplotlib.pyplot as plt
 
 
 dataset_dir = './dataset/'
@@ -68,7 +69,29 @@ def learning(model):
                                   epochs=30,
                                   validation_data=validation_generator,
                                   validation_steps=50)
-    
+    model.save('model.h5')
+    show_result(history)
+
+
+def show_result(history):
+    acc = history.history["acc"]
+    val_acc = history.history["val_acc"]
+    loss = history.history["loss"]
+    val_loss = history.history["val_loss"]
+
+    epochs = range(1,len(acc) + 1)
+
+    plt.plot(epochs, acc,"bo",label="Training Acc")
+    plt.plot(epochs, val_acc,"b",label="Validation Acc")
+    plt.legend()
+
+    plt.figure()
+
+    plt.plot(epochs,loss,"bo",label="Training Loss")
+    plt.plot(epochs,val_loss,"b",label="Validation Loss")
+    plt.legend()
+
+    plt.show()
 
 
 
