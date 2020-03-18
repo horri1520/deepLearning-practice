@@ -33,10 +33,10 @@ def pre_process():
         print(data.shape)
         print(label.shape)
         break
-    create_model()
+    create_model(train_generator, validation_generator)
 
 
-def create_model():
+def create_model(train_generator, validation_generator):
     model = models.Sequential()
     model.add(layers.Conv2D(32,(3,3),activation="relu",input_shape=(150,150,3)))
     model.add(layers.MaxPooling2D((2,2)))
@@ -60,10 +60,10 @@ def create_model():
     model.compile(loss="binary_crossentropy",
              optimizer=optimizers.RMSprop(lr=1e-4),
              metrics=["acc"])
-    learning(model)
+    learning(model, train_generator, validation_generator)
 
 
-def learning(model):
+def learning(model, train_generator, validation_generator):
     history = model.fit_generator(train_generator,
                                   steps_per_epoch=100,
                                   epochs=30,
