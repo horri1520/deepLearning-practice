@@ -60,11 +60,10 @@ def preprocess_imgs(model):
 def learn(model, train_generator, validation_generator):
     history = model.fit_generator(train_generator,
                                   steps_per_epoch=200,
-                                  epochs=30,
+                                  epochs=10,
                                   validation_data=validation_generator,
                                   validation_steps=50)
     model.save('./models/model.h5')
-    save_history(history, './histories/history.txt')
     show_result(history)
 
 
